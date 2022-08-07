@@ -121,7 +121,7 @@ class Block:
         
         # Print blockchain validation result
         if (self.bc.validate_blockchain()):
-            print("Blockchain valid!")
+            print("\nBlockchain valid!")
         else:
             print("Blockchain invalid!")
 

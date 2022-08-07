@@ -32,6 +32,7 @@ def main():
         else:
             # Mine new block and print
             print(f"\n{bl.mine_block(data)}\n")
+            print("-------------------------------------------------\n")
 
 if __name__ == "__main__":
     main()
