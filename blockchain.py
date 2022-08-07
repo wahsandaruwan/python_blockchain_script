@@ -28,7 +28,7 @@ class Blockchain:
             digest = self.custom_digest(new_proof = new_proof, prev_proof = prev_proof, index = index, data = data)
             hash_value = hs.sha256(digest).hexdigest()
 
-            if hash_value[:8] == "00000000":
+            if hash_value[:4] == "0000":
                 verify_proof = True
             else:
                 new_proof += 1
