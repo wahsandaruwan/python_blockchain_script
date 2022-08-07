@@ -51,5 +51,5 @@ class Blockchain:
         Returns :
             dict : Previous block of the blockchain.
         """        
-
+        
         return self.chain[-1]

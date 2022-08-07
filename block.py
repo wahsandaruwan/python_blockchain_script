@@ -1,12 +1,14 @@
 # Inbuild module imports
 from datetime import datetime as dt
-import hashlib as hs
-import json as js
 
 # Custom module imports
 from blockchain import Blockchain
 import helpers as hp
 class Block:
+
+    # -----Class variables-----
+    bc = Blockchain()
+    
     
     # -----Constructors-----
     def __init__(self) -> None:
@@ -20,12 +22,12 @@ class Block:
         proof : int
         prev_hash : str
 
-        # Create an instance of blockchain
-        bc1 = Blockchain()
-
         # Initialize the genesis block
         genesis_block = self.create_block(index = 1, data = "This is the genesis block", proof = 1, prev_hash = "0")
-        bc1.set_chain(genesis_block)
+        self.bc.append_new_block(genesis_block)
+
+        # Print genesis block
+        print(f"{self.bc.get_chain()} \n")
 
         
     # -----Getter and setter functions-----
@@ -107,14 +109,13 @@ class Block:
             dict: New block for the blockchain.
         """        
 
-        bc2 = Blockchain()
-        prev_block = bc2.get_prev_block()
+        prev_block = self.bc.get_prev_block()
         prev_proof = prev_block["proof"]
-        self.index = len(bc2.get_chain()) + 1
-        self.proof = hp.proof_of_work(prev_proof = prev_proof, index = index, data = data)
+        self.index = len(self.bc.get_chain()) + 1
+        self.proof = hp.proof_of_work(prev_proof = prev_proof, index = self.index, data = data)
         self.prev_hash = hp.hash_prev_block(block = prev_block)
-        block = self.create_block(index = index, data = data, proof = proof, prev_hash = prev_hash)
-        bc2.set_chain(block)
+        block = self.create_block(index = self.index, data = data, proof = self.proof, prev_hash = self.prev_hash)
+        self.bc.append_new_block(block)
 
         return block
     
@@ -141,3 +142,14 @@ class Block:
         }
 
         return block
+
+    
+    def view_blockchain(self):
+        """
+        This function retrieves the entire blockchain.
+
+        Returns:
+            list: Entire blockchain.
+        """  
+
+        return self.bc.get_chain()

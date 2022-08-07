@@ -1,3 +1,7 @@
+# Inbuild module imports
+import hashlib as hs
+import json as js
+
 def hash_prev_block(block : dict) -> str:
     """
     This function hash the previous block of the blockchain using sha256 and returns it.
@@ -50,7 +54,7 @@ def proof_of_work(prev_proof : str, index : int, data : str) -> int:
     verify_proof = False
 
     while not verify_proof:
-        digest = self.custom_digest(new_proof = new_proof, prev_proof = prev_proof, index = index, data = data)
+        digest = custom_digest(new_proof = new_proof, prev_proof = prev_proof, index = index, data = data)
         hash_value = hs.sha256(digest).hexdigest()
 
         if hash_value[:4] == "0000":
