@@ -151,14 +151,3 @@ class Block:
         }
 
         return block
-
-    
-    def view_blockchain(self):
-        """
-        This function retrieves the entire blockchain.
-
-        Returns:
-            list: Entire blockchain.
-        """  
-
-        return self.bc.get_chain()
