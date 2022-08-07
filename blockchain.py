@@ -9,22 +9,34 @@ class Blockchain:
         self.chain.append(genesis_block)
 
     def mine_block(self, data : str) -> dict:
+        """
+        This function mines the new block by using proof_of_work, hash_prev_block and create_block functions. And this function acts as the starting point of this script.
+
+        Parameters:
+            data (str): Actual data tob stored in the block.
+
+        Returns:
+            dict: New block of the blockchain.
+        """        
         prev_block = self.get_prev_block()
         prev_proof = prev_block["proof"]
         index = len(self.chain) + 1
         proof = self.proof_of_work(prev_proof = prev_proof, index = index, data = data)
-        prev_hash = None
-        pass
+        prev_hash = self.hash_prev_block(block = prev_block)
+        block = self.create_block(index = index, data = data, proof = proof, prev_hash = prev_hash)
+        self.chain.append(block)
 
-    def hash_block(self, block : dict) -> str:
+        return block
+
+    def hash_prev_block(self, block : dict) -> str:
         """
-        This function hash the new block of the blockchain using sha256 and returns it.
+        This function hash the previous block of the blockchain using sha256 and returns it.
 
         Parameters:
-            block (dict): New block of the blockchain
+            block (dict): Previous block relative to the new block.
 
         Returns:
-            str: Hashed block
+            str: Hashed previous block for the new block of the blockchain.
         """  
 
         json_encoded_block = js.dumps(block, sort_keys=True).encode()
@@ -42,7 +54,7 @@ class Blockchain:
             data (str): Actual data tob stored in the block.
 
         Returns:
-            bytes: Encoded digest
+            bytes: Encoded custom digest to verify the proof.
         """  
 
         digest = str((new_proof ** 3) - (prev_proof ** 3) + ((index * index) / (new_proof * prev_proof))) + data
@@ -51,7 +63,7 @@ class Blockchain:
 
     def proof_of_work(self, prev_proof : str, index : int, data : str) -> int:
         """
-        This function verifies the proof using custom digest and sha256 and returns a new proof
+        This function verifies the proof using custom digest and sha256 and returns a new proof to use for the new transaction.
 
         Parameters:
             prev_proof (str): Previous proof of the previous block.
@@ -59,7 +71,7 @@ class Blockchain:
             data (str): Actual data tob stored in the block.
 
         Returns:
-            int: New proof
+            int: New proof for the new block of the blockchain.
         """   
 
         new_proof = 1
@@ -79,10 +91,10 @@ class Blockchain:
 
     def get_prev_block(self) -> dict:
         """
-        This function gets the previous block of the blockchain and returns it.
+        This function retireves the previous block of the blockchain and returns it.
 
         Returns :
-            dict : Previous block
+            dict : Previous block of the blockchain.
         """        
 
         return self.chain[-1]
@@ -97,7 +109,7 @@ class Blockchain:
             proof (int) : Value used to confirm the transaction and create a new block.
             prev_hash(str) : Hash value of the previous block.
         Returns:
-            dict: New block
+            dict: New block of the blockchain.
         """
                 
         block = {
