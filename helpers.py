@@ -54,6 +54,7 @@ def proof_of_work(prev_proof : str, index : int, data : str) -> int:
     new_proof = 1
     verify_proof = False
 
+    # Generate new proof
     while not verify_proof:
         digest = custom_digest(new_proof = new_proof, prev_proof = prev_proof, index = index, data = data)
         hash_value = hs.sha256(digest).hexdigest()

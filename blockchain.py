@@ -2,7 +2,7 @@
 import hashlib as hs
 
 # Custom module imports
-import helper as hp
+import helpers as hp
 
 class Blockchain:
     
@@ -61,7 +61,7 @@ class Blockchain:
         return self.chain[-1]
 
 
-    def is_chain_valid(self) -> bool:
+    def validate_blockchain(self) -> bool:
         """
         This function verifies whether the blockchain is valid or not
 
@@ -71,10 +71,11 @@ class Blockchain:
         curr_block = self.chain[0]
         block_index = 1
 
+        # Verify hashes of current and next blocks of the blockchain
         while block_index < len(self.chain):
             next_block = self.chain[block_index]
 
-            if (next_block["prev_block"] != hp.hash_prev_block(curr_block)):
+            if (next_block["prev_hash"] != hp.hash_prev_block(curr_block)):
                 return False
 
             curr_proof = curr_block["proof"]
@@ -82,7 +83,8 @@ class Blockchain:
             next_data = next_block["data"]
             next_proof = next_block["proof"]
 
-            hash_value = hs.sha256(hp.custom_digest(new_proof = next_proof, prev_proof = curr_proof, index = next_index, data = next_data)).hexdigest()
+            digest = hp.custom_digest(new_proof = next_proof, prev_proof = curr_proof, index = next_index, data = next_data)
+            hash_value = hs.sha256(digest).hexdigest()
 
             if (hash_value[:4] != "0000"):
                 return False
