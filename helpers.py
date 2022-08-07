@@ -2,6 +2,7 @@
 import hashlib as hs
 import json as js
 
+# -----Block preparing helper functions-----
 def hash_prev_block(block : dict) -> str:
     """
     This function hash the previous block of the blockchain using sha256 and returns it.

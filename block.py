@@ -7,6 +7,7 @@ import helpers as hp
 class Block:
 
     # -----Class variables-----
+    # Instance of blockchain
     bc = Blockchain()
     
     
