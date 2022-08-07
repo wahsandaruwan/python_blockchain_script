@@ -16,7 +16,7 @@ class Blockchain:
 
 
     # -----Getter and setter functions-----
-    def set_chain(self, chain):
+    def set_blockchain(self, chain):
         """
         This function reset the whole chain variable related to the blockchain with a new value.
 
@@ -27,7 +27,7 @@ class Blockchain:
         self.chain = chain
 
 
-    def get_chain(self):
+    def get_blockchain(self):
         """
         This function retrieves the whole chain variable related to the blockchain.
 

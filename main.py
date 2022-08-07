@@ -23,7 +23,7 @@ def main():
             print("\n")
             print("-------------------------------------------------\n")
             # View entire blockchain
-            print(bl.bc.get_chain())
+            print(bl.bc.get_blockchain())
             print("\n-------------------------------------------------")
             print("\n")
         elif(data == "Q"):

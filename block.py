@@ -28,7 +28,7 @@ class Block:
         self.bc.append_new_block(genesis_block)
 
         # Print genesis block
-        print(f"{self.bc.get_chain()[0]} \n")
+        print(f"{self.bc.get_blockchain()[0]} \n")
 
         
     # -----Getter and setter functions-----
@@ -113,7 +113,7 @@ class Block:
         # Prepare a new block and insert it to the blockchain
         prev_block = self.bc.get_prev_block()
         prev_proof = prev_block["proof"]
-        self.index = len(self.bc.get_chain()) + 1
+        self.index = len(self.bc.get_blockchain()) + 1
         self.proof = hp.proof_of_work(prev_proof = prev_proof, index = self.index, data = data)
         self.prev_hash = hp.hash_prev_block(block = prev_block)
         block = self.create_block(index = self.index, data = data, proof = self.proof, prev_hash = self.prev_hash)
