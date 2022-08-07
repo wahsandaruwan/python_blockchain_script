@@ -30,6 +30,12 @@ def main():
             # Terminate
             sys.exit()
         else:
+            # Print blockchain validation result
+            if (bl.bc.validate_blockchain()):
+                print("\nBlockchain valid!")
+            else:
+                print("\nBlockchain invalid!")
+            
             # Mine new block and print
             print(f"\n{bl.mine_block(data = data)}\n")
             print("-------------------------------------------------\n")

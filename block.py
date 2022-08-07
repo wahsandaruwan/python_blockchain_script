@@ -118,12 +118,6 @@ class Block:
         self.prev_hash = hp.hash_prev_block(block = prev_block)
         block = self.create_block(index = self.index, data = data, proof = self.proof, prev_hash = self.prev_hash)
         self.bc.append_new_block(block)
-        
-        # Print blockchain validation result
-        if (self.bc.validate_blockchain()):
-            print("\nBlockchain valid!")
-        else:
-            print("Blockchain invalid!")
 
         return block
     
