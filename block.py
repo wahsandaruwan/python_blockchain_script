@@ -27,7 +27,7 @@ class Block:
         self.bc.append_new_block(genesis_block)
 
         # Print genesis block
-        print(f"{self.bc.get_chain()} \n")
+        print(f"{self.bc.get_chain()[0]} \n")
 
         
     # -----Getter and setter functions-----
