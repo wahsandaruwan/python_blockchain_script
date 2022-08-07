@@ -31,7 +31,7 @@ def main():
             sys.exit()
         else:
             # Mine new block and print
-            print(f"\n{bl.mine_block(data)}\n")
+            print(f"\n{bl.mine_block(data = data)}\n")
             print("-------------------------------------------------\n")
 
 if __name__ == "__main__":
