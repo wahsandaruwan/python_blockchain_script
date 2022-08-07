@@ -1,19 +1,33 @@
+# Inbuild module imports
+from datetime import datetime as dt
+import hashlib as hs
+import json as js
+
+# Custom module imports
+from blockchain import Blockchain
+import helpers as hp
 class Block:
     
     # -----Constructors-----
     def __init__(self) -> None:
         """
         This is the constructor which lets the class initialize the object's attributes.
-        """        
+        """    
+
         # Instance variables
         index : int
         data : str
         proof : int
         prev_hash : str
 
+        # Create an instance of blockchain
+        bc1 = Blockchain()
+
         # Initialize the genesis block
         genesis_block = self.create_block(index = 1, data = "This is the genesis block", proof = 1, prev_hash = "0")
+        bc1.set_chain(genesis_block)
 
+        
     # -----Getter and setter functions-----
     def set_index(self, index : int):
         """
@@ -25,9 +39,18 @@ class Block:
 
         self.index = index
 
+        
     def get_index(self):
-        return self.index
+        """
+        This function retrieves the index variable of the new block.
 
+        Returns:
+            int: Index of the new block.
+        """  
+
+        return self.index
+ 
+    
     def set_proof(self, proof):
         """
         This function assign a new value to the proof variable of the new block.
@@ -38,9 +61,18 @@ class Block:
 
         self.proof = proof
 
+    
     def get_proof(self):
+        """
+        This function retrieves the proof variable of the new block.
+
+        Returns:
+            int: Proof of the new block.
+        """  
+
         return self.proof
 
+    
     def set_prev_hash(self, prev_hash):
         """
         This function assign a new value to the prev_hash variable of the new block.
@@ -51,9 +83,18 @@ class Block:
 
         self.prev_hash = prev_hash
 
+    
     def get_prev_hash(self):
+        """
+        This function retrieves the prev_hash variable of the new block.
+
+        Returns:
+            int: Previous hash of the new block.
+        """  
+
         return self.prev_hash
 
+    
     # -----Other functions-----
     def mine_block(self, data : str) -> dict:
         """
@@ -63,17 +104,20 @@ class Block:
             data (str): Actual data tob stored in the block.
 
         Returns:
-            dict: New block of the blockchain.
+            dict: New block for the blockchain.
         """        
-        prev_block = self.get_prev_block()
+
+        bc2 = Blockchain()
+        prev_block = bc2.get_prev_block()
         prev_proof = prev_block["proof"]
-        self.index = len(self.chain) + 1
-        self.proof = self.proof_of_work(prev_proof = prev_proof, index = index, data = data)
-        self.prev_hash = self.hash_prev_block(block = prev_block)
+        self.index = len(bc2.get_chain()) + 1
+        self.proof = hp.proof_of_work(prev_proof = prev_proof, index = index, data = data)
+        self.prev_hash = hp.hash_prev_block(block = prev_block)
         block = self.create_block(index = index, data = data, proof = proof, prev_hash = prev_hash)
-        self.chain.append(block)
+        bc2.set_chain(block)
 
         return block
+    
     
     def create_block(self, index : int, data : str, proof : int, prev_hash : str) -> dict:
         """
@@ -85,7 +129,7 @@ class Block:
             proof (int) : Value used to confirm the transaction and create a new block.
             prev_hash(str) : Hash value of the previous block.
         Returns:
-            dict: New block of the blockchain.
+            dict: New block for the blockchain.
         """
                 
         block = {
