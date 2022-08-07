@@ -1,3 +1,9 @@
+# Inbuild module imports
+import hashlib as hs
+
+# Custom module imports
+import helper as hp
+
 class Blockchain:
     
     # -----Constructors-----
@@ -53,3 +59,35 @@ class Blockchain:
         """        
         
         return self.chain[-1]
+
+
+    def is_chain_valid(self) -> bool:
+        """
+        This function verifies whether the blockchain is valid or not
+
+        Returns:
+            bool: Validity of the blockchain.
+        """        
+        curr_block = self.chain[0]
+        block_index = 1
+
+        while block_index < len(self.chain):
+            next_block = self.chain[block_index]
+
+            if (next_block["prev_block"] != hp.hash_prev_block(curr_block)):
+                return False
+
+            curr_proof = curr_block["proof"]
+            next_index = next_block["index"]
+            next_data = next_block["data"]
+            next_proof = next_block["proof"]
+
+            hash_value = hs.sha256(hp.custom_digest(new_proof = next_proof, prev_proof = curr_proof, index = next_index, data = next_data)).hexdigest()
+
+            if (hash_value[:4] != "0000"):
+                return False
+
+            curr_block = next_block
+            block_index += 1
+
+        return True
